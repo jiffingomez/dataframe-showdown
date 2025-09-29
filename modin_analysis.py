@@ -19,4 +19,13 @@ def filter_data(df):
     modin_time = time.time() - start
     print(f"Modin result: {len(result_modin)} rows in {modin_time:.4f}s")
 
-# def agg_data(df):
+def agg_data(df):
+    start = time.time()
+    agg_modin = (df[df['active'] == True]
+                 .groupby('department')['salary']
+                 .agg(['mean', 'count', 'std'])
+                 .round(2))
+    modin_agg_time = time.time() - start
+    # print("Modin aggregation:")
+    # print(agg_modin)
+    print(f"Modin aggregation Time: {modin_agg_time:.4f}s")
